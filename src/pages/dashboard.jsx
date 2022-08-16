@@ -399,7 +399,7 @@ export default function Dashboard({ projects = [] }) {
                 {projects.map((project) => (
                   <li key={project.id}>
                     <Link href={`/projects/${project.id}`}>
-                      <a className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6">
+                      <div className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6">
                         <span className="flex items-center space-x-3 truncate">
                           {/* <span
                           className={classNames(
@@ -417,7 +417,7 @@ export default function Dashboard({ projects = [] }) {
                           className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                           aria-hidden="true"
                         />
-                      </a>
+                      </div>
                     </Link>
                   </li>
                 ))}
@@ -479,9 +479,9 @@ export default function Dashboard({ projects = [] }) {
                               aria-hidden="true"
                             /> */}
                             <Link href={`/projects/${project.id}`}>
-                              <a className="truncate hover:text-gray-600">
+                              <div className="truncate hover:text-gray-600">
                                 <span>{project.title}</span>
-                              </a>
+                              </div>
                             </Link>
                           </div>
                         </td>

@@ -111,7 +111,7 @@ export async function getStaticPaths() {
     paths: projects.map((project) => ({
       params: { id: project.id },
     })),
-    fallback: false,
+    fallback: true,
   }
 }
 

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
@@ -397,27 +398,27 @@ export default function Dashboard({ projects = [] }) {
               >
                 {projects.map((project) => (
                   <li key={project.id}>
-                    <a
-                      href="#"
-                      className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
-                    >
-                      <span className="flex items-center space-x-3 truncate">
-                        <span
+                    <Link href={`/projects/${project.id}`}>
+                      <a className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6">
+                        <span className="flex items-center space-x-3 truncate">
+                          {/* <span
                           className={classNames(
                             project.bgColorClass,
                             'h-2.5 w-2.5 flex-shrink-0 rounded-full'
                           )}
                           aria-hidden="true"
-                        />
-                        <span className="truncate text-sm font-medium leading-6">
-                          {project.title}
+                        /> */}
+
+                          <span className="truncate text-sm font-medium leading-6">
+                            {project.title}
+                          </span>
                         </span>
-                      </span>
-                      <ChevronRightIcon
-                        className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </a>
+                        <ChevronRightIcon
+                          className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -477,12 +478,11 @@ export default function Dashboard({ projects = [] }) {
                               )}
                               aria-hidden="true"
                             /> */}
-                            <a
-                              href="#"
-                              className="truncate hover:text-gray-600"
-                            >
-                              <span>{project.title}</span>
-                            </a>
+                            <Link href={`/projects/${project.id}`}>
+                              <a className="truncate hover:text-gray-600">
+                                <span>{project.title}</span>
+                              </a>
+                            </Link>
                           </div>
                         </td>
                         <td className="whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">

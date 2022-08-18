@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
@@ -43,7 +44,7 @@ function MobileNavIcon({ open }) {
   )
 }
 
-function MobileNavigation() {
+function MobileNavigation(user = { user }) {
   return (
     <Popover>
       <Popover.Button
@@ -81,7 +82,11 @@ function MobileNavigation() {
             <MobileNavLink href="#testimonials">Testimonials</MobileNavLink>
             <MobileNavLink href="#pricing">Pricing</MobileNavLink>
             <hr className="m-2 border-slate-300/40" />
-            <MobileNavLink href="/api/auth/signin">Sign in</MobileNavLink>
+            {user ? (
+              <MobileNavLink href="/dashboard">Dashboard</MobileNavLink>
+            ) : (
+              <MobileNavLink href="/api/auth/signin">Sign in</MobileNavLink>
+            )}
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
@@ -90,6 +95,9 @@ function MobileNavigation() {
 }
 
 export function Header() {
+  const { data: session, status } = useSession()
+  const user = session?.user
+
   return (
     <header className="py-10">
       <Container>
@@ -106,7 +114,11 @@ export function Header() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              <NavLink href="/api/auth/signin">Sign in</NavLink>
+              {user ? (
+                <NavLink href="/dashboard">Dashboard</NavLink>
+              ) : (
+                <NavLink href="login">Sign in</NavLink>
+              )}
             </div>
             <Button href="/register" color="blue">
               <span>
@@ -114,7 +126,7 @@ export function Header() {
               </span>
             </Button>
             <div className="-mr-1 md:hidden">
-              <MobileNavigation />
+              <MobileNavigation user={user} />
             </div>
           </div>
         </nav>

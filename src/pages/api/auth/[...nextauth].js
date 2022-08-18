@@ -60,12 +60,12 @@ const sendWelcomeEmail = async ({ user }) => {
 }
 
 export default NextAuth({
-  // pages: {
-  //   signIn: '/',
-  //   signOut: '/',
-  //   error: '/',
-  //   verifyRequest: '/',
-  // },
+  pages: {
+    signIn: '/',
+    signOut: '/',
+    error: '/',
+    verifyRequest: '/',
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,

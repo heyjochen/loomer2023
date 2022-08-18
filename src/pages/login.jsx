@@ -30,12 +30,12 @@ export default function Login({ show = false, onClose = () => null }) {
       // Perform sign in
       const { error } = await signIn('email', {
         redirect: false,
-        callbackUrl: window.location.href,
+        callbackUrl: `${window.location.origin}/dashboard`,
         email,
       })
       // Something went wrong
       if (error) {
-        throw new Error(error)
+        console.log(error)
       }
       toast.dismiss(toastId)
     } catch (err) {
@@ -50,7 +50,7 @@ export default function Login({ show = false, onClose = () => null }) {
     setDisabled(true)
     // Perform sign in
     signIn('google', {
-      callbackUrl: window.location.href,
+      callbackUrl: `${window.location.origin}/dashboard`,
     })
   }
 
@@ -80,29 +80,6 @@ export default function Login({ show = false, onClose = () => null }) {
             </p>
           </div>
         </div>
-        {/* <form action="#" className="mt-10 grid grid-cols-1 gap-y-8">
-          <TextField
-            label="Email address"
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-          />
-
-          <div>
-            <Button
-              type="submit"
-              variant="solid"
-              color="blue"
-              className="w-full"
-            >
-              <span>
-                Sign in <span aria-hidden="true">&rarr;</span>
-              </span>
-            </Button>
-          </div>
-        </form> */}
 
         <Formik
           initialValues={{ email: '' }}

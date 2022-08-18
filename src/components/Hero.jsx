@@ -71,7 +71,6 @@ export function Hero() {
                 role="list"
                 className="flex flex-col items-center gap-y-8 sm:flex-row sm:gap-x-12 sm:gap-y-0"
               >
-                4
                 {group.map((company) => (
                   <li key={company.name} className="flex">
                     <Image src={company.logo} alt={company.name} unoptimized />

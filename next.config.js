@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['vrwdqwonviscyeljayeh.supabase.in'],
+    domains: ['vrwdqwonviscyeljayeh.supabase.in', 'lh3.googleusercontent.com'],
   },
   experimental: {
     newNextLinkBehavior: true,

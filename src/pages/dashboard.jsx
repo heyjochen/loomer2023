@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { Fragment, useState } from 'react'
+import { useSession, signOut } from 'next-auth/react'
+
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   ClockIcon,
@@ -309,7 +311,12 @@ export default function Dashboard({ projects = [] }) {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="#"
+                          // href="#"
+                          onClick={() =>
+                            signOut({
+                              callbackUrl: `${window.location.origin}`,
+                            })
+                          }
                           className={classNames(
                             active
                               ? 'bg-gray-100 text-gray-900'

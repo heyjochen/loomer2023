@@ -1,15 +1,17 @@
 import Link from 'next/link'
 import Image from 'next/image'
-
 import { Fragment, useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
-
+import { useRouter } from 'next/router'
+import { Button } from '@/components/Button'
+import toast from 'react-hot-toast'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   ClockIcon,
   HomeIcon,
   MenuAlt1Icon,
   ViewListIcon,
+  SearchIcon,
   XIcon,
   UserIcon,
 } from '@heroicons/react/outline'
@@ -18,7 +20,7 @@ import {
   DotsVerticalIcon,
   SelectorIcon,
 } from '@heroicons/react/solid'
-
+import axios from 'axios'
 import { prisma } from '@/lib/prisma'
 
 const navigation = [
@@ -75,6 +77,32 @@ export default function Dashboard({ projects = [] }) {
   const { data: session, status } = useSession()
   const user = session?.user
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const router = useRouter()
+
+  const deleteHome = async (id) => {
+    let toastId
+    try {
+      toastId = toast.loading('Deleting...')
+      setDeleting(true)
+
+      await axios.delete(`/api/projects/${id}`)
+      toast.success('Successfully deleted', { id: toastId })
+      router.push('/dashboard')
+    } catch (e) {
+      console.log(e)
+      toast.error('Unable to delete home', { id: toastId })
+      setDeleting(false)
+    }
+  }
+
+  if (status === 'loading') {
+    return <p>Loading...</p>
+  }
+
+  if (status === 'unauthenticated') {
+    return <p>Access Denied</p>
+  }
 
   return (
     <>
@@ -295,7 +323,29 @@ export default function Dashboard({ projects = [] }) {
               </Transition>
             </Menu>
             {/* Sidebar Search */}
-
+            <div className="mt-5 px-3">
+              <label htmlFor="search" className="sr-only">
+                Search
+              </label>
+              <div className="relative mt-1 rounded-md shadow-sm">
+                <div
+                  className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+                  aria-hidden="true"
+                >
+                  <SearchIcon
+                    className="mr-3 h-4 w-4 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </div>
+                <input
+                  type="text"
+                  name="search"
+                  id="search"
+                  className="block w-full rounded-md border-gray-300 pl-9 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  placeholder="Search"
+                />
+              </div>
+            </div>
             {/* Navigation */}
             <nav className="mt-6 px-3">
               <div className="space-y-1">
@@ -330,7 +380,120 @@ export default function Dashboard({ projects = [] }) {
         {/* Main column */}
         <div className="flex flex-col lg:pl-64">
           {/* Search header */}
+          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:hidden">
+            <button
+              type="button"
+              className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500 lg:hidden"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <span className="sr-only">Open sidebar</span>
+              <MenuAlt1Icon className="h-6 w-6" aria-hidden="true" />
+            </button>
+            <div className="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-1">
+                <form className="flex w-full md:ml-0" action="#" method="GET">
+                  <label htmlFor="search-field" className="sr-only">
+                    Search
+                  </label>
+                  <div className="relative w-full text-gray-400 focus-within:text-gray-600">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
+                      <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                    </div>
+                    <input
+                      id="search-field"
+                      name="search-field"
+                      className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
+                      placeholder="Search"
+                      type="search"
+                    />
+                  </div>
+                </form>
+              </div>
+              <div className="flex items-center">
+                {/* Profile dropdown */}
+                <Menu as="div" className="relative ml-3">
+                  <div>
+                    <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                      <span className="sr-only">Open user menu</span>
+                      {user?.image ? (
+                        <Image
+                          className="flex-shrink-0 rounded-full bg-gray-300"
+                          src={user?.image}
+                          alt={user?.name}
+                          width={36}
+                          height={36}
+                        />
+                      ) : (
+                        <UserIcon className="h-6 w-6 text-gray-400" />
+                      )}
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div className="py-1">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              className={classNames(
+                                active
+                                  ? 'bg-gray-100 text-gray-900'
+                                  : 'text-gray-700',
+                                'block px-4 py-2 text-sm'
+                              )}
+                            >
+                              View profile
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              className={classNames(
+                                active
+                                  ? 'bg-gray-100 text-gray-900'
+                                  : 'text-gray-700',
+                                'block px-4 py-2 text-sm'
+                              )}
+                            >
+                              Settings
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </div>
 
+                      <div className="py-1">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              className={classNames(
+                                active
+                                  ? 'bg-gray-100 text-gray-900'
+                                  : 'text-gray-700',
+                                'block px-4 py-2 text-sm'
+                              )}
+                            >
+                              Logout
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </div>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              </div>
+            </div>
+          </div>
           <main className="flex-1">
             {/* Page title & actions */}
             <div className="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
@@ -340,18 +503,11 @@ export default function Dashboard({ projects = [] }) {
                 </h1>
               </div>
               <div className="mt-4 flex sm:mt-0 sm:ml-4">
-                <button
-                  type="button"
-                  className="sm:order-0 order-1 ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-0"
-                >
-                  Share
-                </button>
-                <button
-                  type="button"
-                  className="order-0 inline-flex items-center rounded-md border border-transparent bg-purple-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:order-1 sm:ml-3"
-                >
-                  Create
-                </button>
+                <Link href={'/create'}>
+                  <Button variant="solid" color="blue">
+                    <span>Create</span>
+                  </Button>
+                </Link>
               </div>
             </div>
             {/* Pinned projects */}
@@ -433,6 +589,10 @@ export default function Dashboard({ projects = [] }) {
                         className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
                         scope="col"
                       />
+                      <th
+                        className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
+                        scope="col"
+                      />
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100 bg-white">
@@ -467,12 +627,20 @@ export default function Dashboard({ projects = [] }) {
                           {project.updatedAt}
                         </td>
                         <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
-                          <a
-                            href="#"
-                            className="text-indigo-600 hover:text-indigo-900"
+                          <Link href={`/projects/${project.id}/edit`}>
+                            <div className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </div>
+                          </Link>
+                        </td>
+                        <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
+                          <button
+                            type="button"
+                            disabled={deleting}
+                            onClick={() => deleteHome(`${project.id}`)}
                           >
-                            Edit
-                          </a>
+                            x
+                          </button>
                         </td>
                       </tr>
                     ))}

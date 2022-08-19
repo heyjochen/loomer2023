@@ -100,7 +100,7 @@ export default function Login() {
                 disabled={disabled || !isValid}
               >
                 <span>
-                  Let's get started <span aria-hidden="true">&rarr;</span>
+                  Get started <span aria-hidden="true">&rarr;</span>
                 </span>
               </Button>
             </Form>

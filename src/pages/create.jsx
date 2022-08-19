@@ -1,5 +1,25 @@
 import ListingForm from '@/components/ListingForm'
 import axios from 'axios'
+import { getSession } from 'next-auth/react'
+
+export async function getServerSideProps(context) {
+  // Check if user is authenticated
+  const session = await getSession(context)
+
+  // If not, redirect to the homepage
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
+}
 
 const Create = () => {
   const addProject = (data) => axios.post('/api/projects', data)
@@ -12,7 +32,7 @@ const Create = () => {
       <div className="mt-8">
         <ListingForm
           buttonText="Add project"
-          redirectPath="/"
+          redirectPath="/dashboard"
           onSubmit={addProject}
         />
       </div>

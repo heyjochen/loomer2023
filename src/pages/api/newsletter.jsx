@@ -30,10 +30,15 @@ export default async function handler(req, res) {
         },
       }
     )
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data),
+    {
+      console.log(data)
     }
+    return res.status(200).json({ data })
+
+    // return {
+    //   statusCode: 200,
+    //   body: JSON.stringify(data),
+    // }
   } catch (e) {
     console.log(e)
     return {

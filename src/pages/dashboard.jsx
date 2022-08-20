@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Fragment, useState } from 'react'
+import { getSession } from 'next-auth/react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { Button } from '@/components/Button'
+import { Logo } from '@/components/Logo'
 import toast from 'react-hot-toast'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
@@ -168,11 +170,7 @@ export default function Dashboard({ projects = [] }) {
                     </div>
                   </Transition.Child>
                   <div className="flex flex-shrink-0 items-center px-4">
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark.svg?color=purple&shade=500"
-                      alt="Workflow"
-                    />
+                    <Logo className="h-10 w-auto" />
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
                     <nav className="px-2">
@@ -216,11 +214,7 @@ export default function Dashboard({ projects = [] }) {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-200 lg:bg-gray-100 lg:pt-5 lg:pb-4">
           <div className="flex flex-shrink-0 items-center px-6">
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark.svg?color=purple&shade=500"
-              alt="Workflow"
-            />
+            <Logo className="h-10 w-auto" />
           </div>
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="mt-6 flex h-0 flex-1 flex-col overflow-y-auto">
@@ -655,8 +649,23 @@ export default function Dashboard({ projects = [] }) {
   )
 }
 
-export async function getServerSideProps() {
-  const projects = await prisma.project.findMany()
+export async function getServerSideProps(context) {
+  const session = await getSession(context)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  const projects = await prisma.project.findMany({
+    where: { owner: { email: session.user.email } },
+    orderBy: { createdAt: 'desc' },
+  })
+
   return {
     props: {
       projects: JSON.parse(JSON.stringify(projects)),

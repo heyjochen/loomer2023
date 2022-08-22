@@ -1,35 +1,38 @@
-# Salient
+# Loomer: <a href="https://loomer2023.vercel.app/" target="_blank">See WIP here</a>
 
-Salient is a [Tailwind UI](https://tailwindui.com) site template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org).
+<!-- <a href="" target="_blank"><img src="https://github.com/heyjochen/Art-Postcards/blob/main/assets/README.gif?raw=true" /></a> -->
 
-## Getting started
+A fullstack web app for film photographers to make tracking of their metadata easy.
 
-To get started with this template, first install the npm dependencies:
+## Tech used: ![HTML5 BADGE](https://img.shields.io/static/v1?label=|&message=HTML5&color=23555f&style=flat-square&logo=html5) ![CSS BADGE](https://img.shields.io/static/v1?label=|&message=CSS3&color=285f65&style=flat-square&logo=css3) ![JAVASCRIPT BADGE](https://img.shields.io/static/v1?label=|&message=Javascript&color=3c7f5d&style=flat-square&logo=javascript)
 
-```bash
-npm install
-```
+## Lessons Learned:
 
-Next, run the development server:
+## More Projects
 
-```bash
-npm run dev
-```
-
-Finally, open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
-
-## Customizing
-
-You can start editing this template by modifying the files in the `/src` folder. The site will auto-update as you edit these files.
-
-## License
-
-This site template is a commercial product and is licensed under the [Tailwind UI license](https://tailwindui.com/license).
-
-## Learn more
-
-To learn more about the technologies used in this site template, see the following resources:
-
-- [Tailwind CSS](https://tailwindcss.com/docs) - the official Tailwind CSS documentation
-- [Next.js](https://nextjs.org/docs) - the official Next.js documentation
-- [Headless UI](https://headlessui.dev) - the official Headless UI documentation
+<table bordercolor="#66b2b2">
+  
+  <tr>
+    <td width="33.3%" valign="top">
+<a target="_blank" href="https://paleontologista.com/">Paleontologista</a>
+        <br />
+      <a target="_blank" href="https://paleontologista.com/">
+            <img src="https://github.com/heyjochen/heyjochen/blob/main/assets/Website_Jingmai-OConnor-5fps.gif" width="100%"  alt=""/>
+        </a>
+    </td>
+    <td width="33.3%" valign="top">
+<a target="_blank" href="https://omomi.netlify.app/">Omomi Sushi</a>
+      <br />
+        <a target="_blank" href="https://omomi.netlify.app/">
+          <img src="https://github.com/heyjochen/heyjochen/blob/main/assets/Website_omomi-5fps.gif" width="100%" alt=""/>
+        </a>
+    </td>
+    <td width="33.3%" valign="top">
+<a target="_blank" href="https://stierberger.com">Portfolio</a>
+        <br />
+        <a target="_blank" href="https://stierberger.com">
+          <img src="https://github.com/heyjochen/heyjochen/blob/main/assets/Website_Jochen-Stierberger-5fps.gif" width="100%" alt=""/>
+        </a>
+    </td>
+  </tr>
+</table>

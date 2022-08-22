@@ -1,19 +1,13 @@
 import axios from 'axios'
 
 export default async function handler(req, res) {
-  {
-    console.log(req)
-  }
   const listId = process.env.LIST_ID
   const apiKey = process.env.MAILCHIMP_API_KEY
 
   const { email_address } = req.body
 
   if (!email_address) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ message: 'Please provide an email address' }),
-    }
+    res.status(400).json({ message: 'Please provide an email address' })
   }
 
   try {
@@ -30,20 +24,10 @@ export default async function handler(req, res) {
         },
       }
     )
-    {
-      console.log(data)
-    }
-    return res.status(200).json({ data })
 
-    // return {
-    //   statusCode: 200,
-    //   body: JSON.stringify(data),
-    // }
+    res.status(200).json({ data })
   } catch (e) {
     console.log(e)
-    return {
-      statusCode: 500,
-      body: JSON.stringify(error),
-    }
+    res.status(500).json({ error })
   }
 }

@@ -26,7 +26,7 @@ import axios from 'axios'
 import { prisma } from '@/lib/prisma'
 
 const navigation = [
-  { name: 'Home', href: '#', icon: HomeIcon, current: true },
+  { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
   { name: 'My tasks', href: '#', icon: ViewListIcon, current: false },
   { name: 'Recent', href: '#', icon: ClockIcon, current: false },
 ]
@@ -305,7 +305,7 @@ export default function Dashboard({ projects = [] }) {
                             active
                               ? 'bg-gray-100 text-gray-900'
                               : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
+                            'block cursor-pointer px-4 py-2 text-sm'
                           )}
                         >
                           Logout
@@ -469,12 +469,17 @@ export default function Dashboard({ projects = [] }) {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              // href="#"
+                              onClick={() =>
+                                signOut({
+                                  callbackUrl: `${window.location.origin}`,
+                                })
+                              }
                               className={classNames(
                                 active
                                   ? 'bg-gray-100 text-gray-900'
                                   : 'text-gray-700',
-                                'block px-4 py-2 text-sm'
+                                'block cursor-pointer px-4 py-2 text-sm'
                               )}
                             >
                               Logout

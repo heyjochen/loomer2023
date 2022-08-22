@@ -7,6 +7,7 @@ import { Formik, Form } from 'formik'
 import Input from '@/components/Input'
 import ImageUpload from '@/components/ImageUpload'
 import axios from 'axios'
+import { Button } from './Button'
 
 const ListingSchema = Yup.object().shape({
   title: Yup.string().trim().required(),
@@ -136,13 +137,14 @@ const ListingForm = ({
             </div>
 
             <div className="flex justify-end">
-              <button
+              <Button
+                variant="solid"
+                color="blue"
                 type="submit"
                 disabled={disabled || !isValid}
-                className="rounded-md bg-rose-600 py-2 px-6 text-white transition hover:bg-rose-500 focus:outline-none focus:ring-4 focus:ring-rose-600 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-rose-600"
               >
-                {isSubmitting ? 'Submitting...' : buttonText}
-              </button>
+                <span>{isSubmitting ? 'Submitting...' : buttonText}</span>
+              </Button>
             </div>
           </Form>
         )}

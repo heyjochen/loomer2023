@@ -48,7 +48,7 @@ const Edit = (project = null) => {
           <ListingForm
             initialValues={project}
             buttonText="Update project"
-            redirectPath={`/projects/${project.id}`}
+            redirectPath={`/dashboard`}
             onSubmit={handleOnSubmit}
           />
         ) : null}{' '}

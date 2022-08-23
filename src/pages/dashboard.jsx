@@ -27,8 +27,8 @@ import { prisma } from '@/lib/prisma'
 
 const navigation = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'My tasks', href: '#', icon: ViewListIcon, current: false },
-  { name: 'Recent', href: '#', icon: ClockIcon, current: false },
+  // { name: 'My tasks', href: '#', icon: ViewListIcon, current: false },
+  // { name: 'Recent', href: '#', icon: ClockIcon, current: false },
 ]
 
 // const projects = [
@@ -258,7 +258,7 @@ export default function Dashboard({ projects = [] }) {
                 leaveTo="transform opacity-0 scale-95"
               >
                 <Menu.Items className="absolute right-0 left-0 z-10 mx-3 mt-1 origin-top divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <div className="py-1">
+                  {/* <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
                         <a
@@ -289,7 +289,7 @@ export default function Dashboard({ projects = [] }) {
                         </a>
                       )}
                     </Menu.Item>
-                  </div>
+                  </div> */}
 
                   <div className="py-1">
                     <Menu.Item>
@@ -432,7 +432,7 @@ export default function Dashboard({ projects = [] }) {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <div className="py-1">
+                      {/* <div className="py-1">
                         <Menu.Item>
                           {({ active }) => (
                             <a
@@ -463,7 +463,7 @@ export default function Dashboard({ projects = [] }) {
                             </a>
                           )}
                         </Menu.Item>
-                      </div>
+                      </div> */}
 
                       <div className="py-1">
                         <Menu.Item>

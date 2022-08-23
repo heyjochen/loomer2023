@@ -24,12 +24,12 @@ export async function getServerSideProps(context) {
 const Create = () => {
   const addProject = (data) => axios.post('/api/projects', data)
   return (
-    <div className="mx-auto max-w-screen-sm">
+    <div className="mx-auto mt-4 max-w-screen-sm px-12">
       <h1 className="text-xl font-medium text-gray-800">Add your project</h1>
       <p className="text-gray-500">
         Fill out the form below to list a new project.
       </p>
-      <div className="mt-8">
+      <div className="mt-4">
         <ListingForm
           buttonText="Add project"
           redirectPath="/dashboard"

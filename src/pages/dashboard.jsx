@@ -558,7 +558,7 @@ export default function Dashboard({ projects = [] }) {
                         className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                         scope="col"
                       >
-                        <span className="lg:pl-2">Title</span>
+                        <span className="lg:pl-2">Photo</span>
                       </th>
                       <th
                         className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
@@ -606,6 +606,16 @@ export default function Dashboard({ projects = [] }) {
                               )}
                               aria-hidden="true"
                             /> */}
+                            <td className="aspect-h-9 aspect-w-16 whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
+                              {project?.image ? (
+                                <Image
+                                  src={project.image}
+                                  alt={project.title}
+                                  layout="fill"
+                                  objectFit="cover"
+                                />
+                              ) : null}
+                            </td>
                             <Link href={`/projects/${project.id}`}>
                               <div className="truncate hover:text-gray-600">
                                 <span>{project.title}</span>

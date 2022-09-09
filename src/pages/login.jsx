@@ -23,7 +23,7 @@ export default function Login() {
   const [showConfirm, setConfirm] = useState(false)
   const [showSignIn, setShowSignIn] = useState(false)
 
-  const signInWithEmail = async ({ email }) => {
+  const signInWithEmail = async ({ email }, { resetForm }) => {
     let toastId
     try {
       toastId = toast.loading('Loading...')
@@ -33,6 +33,7 @@ export default function Login() {
         callbackUrl: `${window.location.origin}/dashboard`,
         email,
       })
+      resetForm({})
       // Something went wrong
       if (error) {
         console.log(error)
